@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.proactivesensing.proactiveone.p1_safety_useequip">
+
+    <uses-permission android:name="android.permission.STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:finishOnTaskLaunch="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity
+            android:name="._00_Load"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="._01_Home"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="._b2_EnterId"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="._02_Nfc"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="._b4_GetEquipId"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="._b5_Tags"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="._b6_Sign"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"></activity>
+    </application>
+</manifest>
