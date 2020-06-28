@@ -66,10 +66,10 @@ public class _01_Home extends AppCompatActivity {
             ((Button) findViewById(R.id.button_2)).setBackground(getResources().getDrawable(R.drawable.material_button_blue));
     }
 
-    public void button1(View view) { button((short) 1); }
-    public void button2(View view) { button((short) 2); }
+    public void button1(View view) { button(1); }
+    public void button2(View view) { button(2); }
 
-    public void button(short which) {
+    public void button(int which) {
         Intent intent = null;
         switch(_Variables.COMPILER_MODE.get()) {
             case 1: //  WIRELESS
@@ -88,8 +88,8 @@ public class _01_Home extends AppCompatActivity {
                     //else
                     //    ((Button) findViewById(R.id.button_2)).setBackground(getResources().getDrawable(R.drawable.material_button_grey));
 
-                    Toast.makeText(this, "Database Is Up To Date", Toast.LENGTH_SHORT).show();
-                    //(new Thread(new _File(true))).start();
+                    //Toast.makeText(this, "Database Is Up To Date", Toast.LENGTH_SHORT).show();
+                    (new Thread(new _File(true))).start();
                 }
                 else
                     Log.e("ERROR", "_01_Home (1): public void button1(View view)");

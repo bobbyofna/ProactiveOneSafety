@@ -169,7 +169,7 @@ public class _02_Nfc extends AppCompatActivity {
         }
     }
 
-    private NdefRecord createRecord(short address, short value) {
+    private NdefRecord createRecord(int address, int value) {
         ByteArrayOutputStream payload = new ByteArrayOutputStream();
 
         payload.write('M');
@@ -195,19 +195,19 @@ public class _02_Nfc extends AppCompatActivity {
             case 2: //  CONFIGURE EQUIPMENT
                 break;
             case 3: //  USE EQUIPMENT
-                ndef.add(createRecord(((short) 2302), _Variables.OPERATOR_ID.get()));
+                ndef.add(createRecord((2302), _Variables.OPERATOR_ID.get()));
                 if(!_Variables.USE_EQUIP_MODE.get())
-                    ndef.add(createRecord(((short) 2303), ((short) 1)));
+                    ndef.add(createRecord((2303), (1)));
                 else
-                    ndef.add(createRecord(((short) 2303), ((short) 2)));
+                    ndef.add(createRecord((2303), (2)));
                 break;
             case 4: //  MANAGE RENTAL
                 if(!_Variables.MANAGE_RENTAL_MODE.get()) {
-                    ndef.add(createRecord(((short) 2300), _Variables.CUSTOMER_ID.get()));
-                    ndef.add(createRecord(((short) 2301), ((short) 1)));
+                    ndef.add(createRecord((2300), _Variables.CUSTOMER_ID.get()));
+                    ndef.add(createRecord((2301), (1)));
                 }
                 else
-                    ndef.add(createRecord(((short) 2301), ((short) 2)));
+                    ndef.add(createRecord((2301), (2)));
                 break;
             default:
                 Log.e("ERROR", "_02_Nfc (1): public void createNdefMessage()");
@@ -215,7 +215,7 @@ public class _02_Nfc extends AppCompatActivity {
         }
 
         NdefRecord[] ndefr = new NdefRecord[ndef.size()];
-        for (short i = 0; i < ndef.size(); i++)
+        for (int i = 0; i < ndef.size(); i++)
             ndefr[i] = ndef.get(i);
         NdefMessage ndefMessage = new NdefMessage(ndefr);
 

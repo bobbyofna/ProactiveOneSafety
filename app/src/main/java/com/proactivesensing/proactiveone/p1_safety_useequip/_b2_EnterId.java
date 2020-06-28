@@ -47,12 +47,12 @@ public class _b2_EnterId extends AppCompatActivity {
 
     public void send(View view) {
         //  TODO:   PREVENT THE USER FROM BEING ABLE TO ENTER TOO LARGE OR TOO SMALL OF A NUMBER
-        short input = 0;
+        int input = 0;
         int testInput = 0;
 
         try {
             testInput = Integer.parseInt("" + ((EditText) findViewById(R.id.edittext_1)).getText());
-            input = (short) testInput;
+            input = testInput;
         } catch(Exception e) {
             Toast.makeText(_Variables.CONTEXT.get(), "Invalid Input, Please Try Again", Toast.LENGTH_SHORT).show();
             ((EditText) findViewById(R.id.edittext_1)).setText("");

@@ -256,7 +256,7 @@ public class _b5_Tags extends AppCompatActivity {
         return -1;
     }
 
-    public boolean checkTag(short addUnit, short valueUnit, short addTag, int valueTag) {
+    public boolean checkTag(int addUnit, int valueUnit, int addTag, int valueTag) {
         //if((addUnit == 10000) && (addTag == 20000)) {
         //    if((_Variables.ID.get().get(_Variables.EQUIPMENT_ID_INDEX.get()) == valueUnit) &&  ((_Variables.TAG_IDS.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(INDEX)) == valueTag))
         //        return true;
@@ -301,9 +301,9 @@ public class _b5_Tags extends AppCompatActivity {
         try {
             NdefRecord[] ndefRecords = ndefMessage.getRecords();
 
-            short addUnit = getAddFromNdefRecordFirst(ndefRecords[0]);
-            short valUnit = getValFromNdefRecordFirst(ndefRecords[0]);
-            short addTag = getAddFromNdefRecordLast(ndefRecords[1]);
+            int addUnit = getAddFromNdefRecordFirst(ndefRecords[0]);
+            int valUnit = getValFromNdefRecordFirst(ndefRecords[0]);
+            int addTag = getAddFromNdefRecordLast(ndefRecords[1]);
             int valTag = getValFromNdefRecordLast(ndefRecords[1]);
 
             handleQuestions(checkTag(addUnit, valUnit, addTag, valTag), 4);
@@ -322,31 +322,31 @@ public class _b5_Tags extends AppCompatActivity {
         } catch(Exception e) { createDialog(0, "Error", "Issue Encountered While Attempting To Read Tag.  Would You Like To Try Again?", "Yes", "", "No"); }
     }
 
-    public short getAddFromNdefRecordFirst(NdefRecord ndefRecord) {
+    public int getAddFromNdefRecordFirst(NdefRecord ndefRecord) {
         try {
             byte[] payload = ndefRecord.getPayload();
 
-            return (new _Variables()).getShortFromTwoBytes(payload[4], payload[3]);
+            return (new _Variables()).getIntFromTwoBytes(payload[4], payload[3]);
         } catch (Exception e) {}
-        return ((short) -1);
+        return (-1);
     }
 
-    public short getValFromNdefRecordFirst(NdefRecord ndefRecord) {
+    public int getValFromNdefRecordFirst(NdefRecord ndefRecord) {
         try {
             byte[] payload = ndefRecord.getPayload();
 
-            return (new _Variables()).getShortFromTwoBytes(payload[9], payload[8]);
+            return (new _Variables()).getIntFromTwoBytes(payload[9], payload[8]);
         } catch (Exception e) {}
-        return ((short) -1);
+        return (-1);
     }
 
-    public short getAddFromNdefRecordLast(NdefRecord ndefRecord) {
+    public int getAddFromNdefRecordLast(NdefRecord ndefRecord) {
         try {
             byte[] payload = ndefRecord.getPayload();
 
-            return (new _Variables()).getShortFromTwoBytes(payload[4], payload[3]);
+            return (new _Variables()).getIntFromTwoBytes(payload[4], payload[3]);
         } catch (Exception e) {}
-        return ((short) -1);
+        return (-1);
     }
 
     public int getValFromNdefRecordLast(NdefRecord ndefRecord) {

@@ -24,7 +24,6 @@ public class _00_Load extends AppCompatActivity {
         _Variables.CONTEXT.set(getApplicationContext());
         ((TextView) findViewById(R.id.version)).setText("v" + _Variables.VERSION.get());
 
-
         new _Settings(false, 3);
         new _Settings(false, 2);
 

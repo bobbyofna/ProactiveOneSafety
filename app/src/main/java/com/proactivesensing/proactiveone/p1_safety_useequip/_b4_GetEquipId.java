@@ -35,7 +35,7 @@ public class _b4_GetEquipId extends AppCompatActivity {
 
     }
 
-    public boolean findMatchingEquipType(short address, short value) {
+    public boolean findMatchingEquipType(int address, int value) {
         /*
         if(address == 10000) {
             for (int i = 0; i < _Variables.ID.get().size(); i++) {
@@ -156,10 +156,10 @@ public class _b4_GetEquipId extends AppCompatActivity {
         }
     }
 
-    public short[] getDataFromNdefRecord(NdefRecord ndefRecord) throws Exception {
+    public int[] getDataFromNdefRecord(NdefRecord ndefRecord) throws Exception {
         try {
             byte[] payload = ndefRecord.getPayload();
-            return new short[]{(new _Variables()).getShortFromTwoBytes(payload[4], payload[3]), (new _Variables()).getShortFromTwoBytes(payload[9], payload[8])};
+            return new int[]{(new _Variables()).getIntFromTwoBytes(payload[4], payload[3]), (new _Variables()).getIntFromTwoBytes(payload[9], payload[8])};
         } catch (Exception e) {}
         throw null;
     }
