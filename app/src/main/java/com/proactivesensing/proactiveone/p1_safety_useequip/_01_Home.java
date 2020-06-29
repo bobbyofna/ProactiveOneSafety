@@ -38,11 +38,6 @@ public class _01_Home extends AppCompatActivity {
                 ((Button) findViewById(R.id.button_2)).setText("Check For Updates");
                 update = findViewById(R.id.button_2);
                 setButtonColorBackToNormal();
-
-                if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE))
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 138);
-                if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 138);
                 break;
             case 4: //  MANAGE RENTAL
                 setContentView(R.layout.b_01___home);

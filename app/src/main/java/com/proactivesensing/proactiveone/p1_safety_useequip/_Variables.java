@@ -27,22 +27,6 @@ public class _Variables {
 
     public static final AtomicReference<String>                         _FILE_NAME_REF = new AtomicReference<>(file_name_reference);
     public static final AtomicReference<Long>                           _FILE_EPOCH = new AtomicReference<>();
-    public static final AtomicReference<ArrayList<String>>              COMPANY = new AtomicReference<>(new ArrayList<String>());
-    public static final AtomicReference<ArrayList<String>>              TYPE = new AtomicReference<>(new ArrayList<String>());
-    public static final AtomicReference<ArrayList<String>>              SUBTYPE = new AtomicReference<>(new ArrayList<String>());
-    public static final AtomicReference<ArrayList<String>>              PRODUCT = new AtomicReference<>(new ArrayList<String>());
-    public static final AtomicReference<ArrayList<Integer>>             UNIT_ID = new AtomicReference<>(new ArrayList<Integer>());
-
-    public static final AtomicReference<ArrayList<Integer>>             QUES_COUNT = new AtomicReference<>(new ArrayList<Integer>());
-    public static final AtomicReference<ArrayList<Boolean>>             NFC_ENABLED = new AtomicReference<>(new ArrayList<Boolean>());
-    public static final AtomicReference<ArrayList<ArrayList<String>>>   QUESTIONS = new AtomicReference<>(new ArrayList<ArrayList<String>>());
-    public static final AtomicReference<ArrayList<ArrayList<Integer>>>  NFC_EN_INDEXES = new AtomicReference<>(new ArrayList<ArrayList<Integer>>());
-    public static final AtomicReference<ArrayList<ArrayList<Integer>>>  NFC_PER_INDEX = new AtomicReference<>(new ArrayList<ArrayList<Integer>>());
-    public static final AtomicReference<ArrayList<ArrayList<String>>>   NFC_LABELS = new AtomicReference<>(new ArrayList<ArrayList<String>>());
-    public static final AtomicReference<ArrayList<ArrayList<String>>>   NFC_LOCATIONS = new AtomicReference<>(new ArrayList<ArrayList<String>>());
-    public static final AtomicReference<ArrayList<ArrayList<String>>>   NFC_NAMES = new AtomicReference<>(new ArrayList<ArrayList<String>>());
-    public static final AtomicReference<ArrayList<ArrayList<Integer>>>  NFC_IDS = new AtomicReference<>(new ArrayList<ArrayList<Integer>>());
-    public static final AtomicReference<ArrayList<String>>              NFC_STND_QUES = new AtomicReference<>(new ArrayList<String>());
 
     public static final AtomicReference<SharedPreferences>              SETTINGS = new AtomicReference<>();
     public static final AtomicReference<Context>                        CONTEXT = new AtomicReference<>(null);
@@ -52,15 +36,15 @@ public class _Variables {
     public static final AtomicReference<String>                         PREFS_FIRST = new AtomicReference<>("FirstTime");
     public static final AtomicReference<String>                         PREFS_JSON = new AtomicReference<>("JsonHash");
 
-    public static final AtomicReference<Integer>                          OPERATOR_ID = new AtomicReference<>();
-    public static final AtomicReference<Integer>                        EQUIPMENT_ID_INDEX = new AtomicReference<>();
+    public static final AtomicReference<Integer>                        OPERATOR_ID = new AtomicReference<>();
     public static final AtomicReference<Boolean>                        USE_EQUIP_MODE = new AtomicReference<>(false);
+    public static final AtomicReference<Integer>                        EQUIPMENT_COMPANY_INDEX = new AtomicReference<>();
+    public static final AtomicReference<Integer>                        EQUIPMENT_UNIT_INDEX = new AtomicReference<>();
 
-    public static final AtomicReference<Integer>                          CUSTOMER_ID = new AtomicReference<>();
+    public static final AtomicReference<Integer>                        CUSTOMER_ID = new AtomicReference<>();
     public static final AtomicReference<Boolean>                        MANAGE_RENTAL_MODE = new AtomicReference<>(false);
 
-    public static final AtomicReference<Integer>                          COMPILER_MODE = new AtomicReference<>(compilerMode);
-    public static final AtomicReference<CookieManager>                  COOKIE_MONSTER = new AtomicReference<>();
+    public static final AtomicReference<Integer>                        COMPILER_MODE = new AtomicReference<>(compilerMode);
 
     public _Variables() {}
 

@@ -31,6 +31,9 @@ public class _b5_Tags extends AppCompatActivity {
     private ArrayList<ArrayList<String>> TAG_LOCATIONS = new ArrayList<>();
     private ArrayList<ArrayList<String>> TAG_NAMES = new ArrayList<>();
 
+    private Company COMPANY;
+    private Unit UNIT;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +45,9 @@ public class _b5_Tags extends AppCompatActivity {
         nfcAdapter = nfcAdapter.getDefaultAdapter(this);
         info = (TextView) findViewById(R.id.message);
 
-        QUES_SIZE = _Variables.QUESTIONS.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).size();
+        COMPANY = _Variables.COMPANIES.get().get(_Variables.EQUIPMENT_COMPANY_INDEX.get());
+        UNIT = COMPANY.getFullModelList().get(_Variables.EQUIPMENT_UNIT_INDEX.get());
+
         generateTrackingLists();
 
         QUES_INDEX = -1;
@@ -59,7 +64,6 @@ public class _b5_Tags extends AppCompatActivity {
     public void generateTrackingLists() {
         int nfcIndex = 0;
         int count;
-        boolean hasNfc;
         ArrayList<Boolean> temp1;
         ArrayList<String> temp2;
         ArrayList<String> temp3;
@@ -67,32 +71,20 @@ public class _b5_Tags extends AppCompatActivity {
 
 
         for(int i = 0; i < QUES_SIZE; i++) {
-            QUESTION_ANSWERED.add(false);
-            hasNfc = false;
-
-            for(int k = nfcIndex; k < _Variables.NFC_EN_INDEXES.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).size(); k++) {
-                if(_Variables.NFC_EN_INDEXES.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(k) == i) {
-                    hasNfc = true;
-                    break;
-                }
-            }
-            QUESTION_HAS_NFC.add(hasNfc);
-            
             temp1 = new ArrayList<>();
             temp2 = new ArrayList<>();
             temp3 = new ArrayList<>();
             temp4 = new ArrayList<>();
             count = 0;
-            if(hasNfc) {
-                for(int k = 0; k < _Variables.NFC_PER_INDEX.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(nfcIndex); k++, count++) {
-                    temp1.add(false);
-                    temp2.add(_Variables.NFC_LABELS.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(k));
-                    temp3.add(_Variables.NFC_LOCATIONS.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(k));
-                    temp4.add(_Variables.NFC_NAMES.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(k));
-                }
-
-                nfcIndex++;
+            for(int k = 0; k < UNIT.getNfcCountByQuestionIndex(i); k++, nfcIndex++, count++) {
+                temp1.add(false);
+                temp2.add(UNIT.getNfcLabelsList().get(nfcIndex));
+                temp3.add(UNIT.getNfcLocationsList().get(nfcIndex));
+                temp4.add(UNIT.getNfcNamesList().get(nfcIndex));
             }
+
+            QUESTION_ANSWERED.add(false);
+            QUESTION_HAS_NFC.add(UNIT.getNfcEnabledByQuestionIndex(i));
             NFC_ANSWERED.add(temp1);
             TAGS_PER_NFC.add(count);
             TAG_LABELS.add(temp2);
@@ -103,8 +95,6 @@ public class _b5_Tags extends AppCompatActivity {
     
     private void handleQuestions(boolean resume, int from) {
         if(resume) {
-            //if(QUES_INDEX)
-            //lingerStr = "Success!\n\n";
 
             if(doingNfcRn) {
                 if(!QUESTION_ANSWERED.get(QUES_INDEX))
@@ -118,9 +108,6 @@ public class _b5_Tags extends AppCompatActivity {
                     doingNfcRn = true;
                 else
                     doingNfcRn = false;
-
-                //if()
-                //NFC_ANSWERED.get(QUES_INDEX).set(NFC_INDEX, true);
             }
 
             if(!doingNfcRn) {
@@ -145,14 +132,14 @@ public class _b5_Tags extends AppCompatActivity {
             if (!(QUESTION_HAS_NFC.get(QUES_INDEX))) {
                 doingNfcRn = false;
                 nfcEnabled = false;
-                createDialog(2, ("Safety Inspection (" + (QUES_INDEX + 1) + "/" + QUES_SIZE + ")"), ("" + lingerStr + _Variables.QUESTIONS.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(QUES_INDEX)), "Confirm", "", "Cancel");
+                createDialog(2, ("Safety Inspection (" + (QUES_INDEX + 1) + "/" + QUES_SIZE + ")"), ("" + lingerStr + UNIT.getQuestionByIndex(QUES_INDEX)), "Confirm", "", "Cancel");
             } else {
                 //CURR_NFC_SIZE = _Variables.NFC_PER_INDEX.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get()
 
                 doingNfcRn = true;
                 if (!QUESTION_ANSWERED.get(QUES_INDEX)) {
                     nfcEnabled = false;
-                    createDialog(3, ("Safety Inspection (" + (QUES_INDEX + 1) + "/" + QUES_SIZE + ")"), ("" + lingerStr + _Variables.QUESTIONS.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(QUES_INDEX)), "Confirm", "", "Cancel");
+                    createDialog(3, ("Safety Inspection (" + (QUES_INDEX + 1) + "/" + QUES_SIZE + ")"), ("" + lingerStr + UNIT.getQuestionByIndex(QUES_INDEX)), "Confirm", "", "Cancel");
                 } else {
                     nfcEnabled = true;
                     info.setText("" + lingerStr + (("" + makeQuestion().replace("[", "")).replace("]", "")));
@@ -226,43 +213,32 @@ public class _b5_Tags extends AppCompatActivity {
     }
 
     private String makeQuestion() {
-        String stnd = "" + _Variables.NFC_STND_QUES.get().get(_Variables.EQUIPMENT_ID_INDEX.get());
-        String aaa = "" + TAG_LABELS.get(QUES_INDEX).get(NFC_INDEX);
-        String bbb = "" + TAG_LOCATIONS.get(QUES_INDEX).get(NFC_INDEX);
-        String ccc = "" + TAG_NAMES.get(QUES_INDEX).get(NFC_INDEX);
+        String stnd = "" + UNIT.getStandardNfcQuestion();
+        String aaa = "" + UNIT.getNfcLabelsList().get(NFC_INDEX);
+        String bbb = "" + UNIT.getNfcLocationsList().get(NFC_INDEX);
+        String ccc = "" + UNIT.getNfcNamesList().get(NFC_INDEX);
 
         try {
             stnd = stnd.replaceAll("aaa", aaa);
             stnd = stnd.replaceAll("bbb", bbb);
             stnd = stnd.replaceAll("ccc", ccc);
             stnd = stnd.replaceAll("And Located", "Located");
-
-//            for(int i = 0; i < 10; i++) {
-//                stnd = stnd.replace("[", "");
-//                stnd = stnd.replace("]", "");
-//            }
         } catch(Exception e) { return ""; }
 
         return stnd;
     }
 
-    private int nfcIndexCheck(int index) {
-        try {
-            for (int i = 0; i < _Variables.NFC_EN_INDEXES.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).size(); i++)
-                if(index == _Variables.NFC_EN_INDEXES.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(i))
-                    return i;
-        } catch(Exception e) { return -1; }
-
-        return -1;
-    }
+    //private int nfcIndexCheck(int index) {
+    //    try {
+    //        for (int i = 0; i < _Variables.NFC_EN_INDEXES.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).size(); i++)
+    //            if(index == _Variables.NFC_EN_INDEXES.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(i))
+    //                return i;
+    //    } catch(Exception e) { return -1; }
+    //    return -1;
+    //}
 
     public boolean checkTag(int addUnit, int valueUnit, int addTag, int valueTag) {
-        //if((addUnit == 10000) && (addTag == 20000)) {
-        //    if((_Variables.ID.get().get(_Variables.EQUIPMENT_ID_INDEX.get()) == valueUnit) &&  ((_Variables.TAG_IDS.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(INDEX)) == valueTag))
-        //        return true;
-        //}
-        //Log.e("ERROR", "Could Not Find Matching Tag");
-        return true;
+        return ((UNIT.getId() == valueUnit) && (UNIT.getNfcIdsList().get(NFC_INDEX) == valueTag));
     }
 
     @Override
@@ -396,13 +372,12 @@ public class _b5_Tags extends AppCompatActivity {
              //   NFC_MODE = 0;
         }
         if((NFC_MODE == -1) || (NFC_MODE == 0)) {
-            if(_Variables.NFC_EN_INDEXES.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(NFC_PER_QUES_INDEX) != QUES_INDEX) {
+            if(UNIT.getNfcEnabledByQuestionIndex(QUES_INDEX)) {
                 NFC_MODE = 0;
-                createDialog(2, "Safety Inspection", ("" + lingerStr + _Variables.QUESTIONS.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(QUES_INDEX)), "Confirm", "", "Cancel");
-            }
+                createDialog(2, "Safety Inspection", ("" + lingerStr + UNIT.getQuestionByIndex(QUES_INDEX)), "Confirm", "", "Cancel");            }
             else {
                 NFC_MODE = 1;
-                createDialog(2, "Safety Inspection", ("" + lingerStr + _Variables.QUESTIONS.get().get(_Variables.EQUIPMENT_ID_INDEX.get()).get(QUES_INDEX)), "Confirm", "", "Cancel");
+                createDialog(2, "Safety Inspection", ("" + lingerStr + UNIT.getQuestionByIndex(QUES_INDEX)), "Confirm", "", "Cancel");
             }
         }
         else if((NFC_MODE == 1) || (NFC_MODE == 2)) {
@@ -420,12 +395,8 @@ public class _b5_Tags extends AppCompatActivity {
 
             info.setText("" + lingerStr + (("" + makeQuestion().replace("[", "")).replace("]", "")));
             nfcEnabled = true;
-
-
         }
-        else {
-
-        }
+        else {}
     }
 
     @Override

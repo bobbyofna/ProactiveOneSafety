@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class _00_Load extends AppCompatActivity {
 
     private boolean PERM = false;
@@ -34,18 +37,21 @@ public class _00_Load extends AppCompatActivity {
             case 2: //  CONFIGURE EQUIPMENT
                 break;
             case 3: //  USE EQUIPMENT
-                ((TextView) findViewById(R.id.note)).setText("Safety App:  Use Equipment");
-                if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE))
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 138);
-                else
-                    PERM = true;
+                List<String> permissionNeeded = new ArrayList<>();
+                String[] allPermissionNeeded = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+                for (String permission : allPermissionNeeded)
+                    if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
+                        permissionNeeded.add(permission);
 
-                if(PERM)
-                    next(true);
+                if (permissionNeeded.size() > 0)
+                    ActivityCompat.requestPermissions(this, permissionNeeded.toArray(new String[0]), 138);
+                else
+                if(!_Variables.FILE_READ.get())
+                    (new Thread(new _File())).start();
                 break;
             case 4: //  MANAGE RENTAL
                 ((TextView) findViewById(R.id.note)).setText("Safety App:  Manage Rental");
-                next(false);
+                next();
                 break;
             default:
                 Log.e("ERROR", "_01_Home (1): public void onCreate(Bundle savedInstanceState)");
@@ -55,19 +61,11 @@ public class _00_Load extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE))
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 138);
-        else
-            PERM = true;
-
-        if(PERM)
-            next(true);
+        (new Thread(new _File())).start();
+        next();
     }
 
-    public void next(boolean threaded) {
-        if(threaded)
-            new Thread(new _File(true)).start();
-
+    public void next() {
         Runnable run1 = new Runnable() {
             @Override
             public void run() {

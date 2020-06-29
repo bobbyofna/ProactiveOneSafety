@@ -36,12 +36,17 @@ public class _b4_GetEquipId extends AppCompatActivity {
     }
 
     public boolean findMatchingEquipType(int address, int value) {
-        /*
-        if(address == 10000) {
-            for (int i = 0; i < _Variables.ID.get().size(); i++) {
-                if (((int) _Variables.ID.get().get(i)) == ((int) value)) {
-                    _Variables.EQUIPMENT_ID_INDEX.set(i);
-                    return true;
+        Log.e("Dr. Debug...", "Address:  " + address);
+        if(address == 2304) {
+            for(int i = 0; i < _Variables.COMPANIES.get().size(); i++) {
+                for(int k = 0; k < _Variables.COMPANIES.get().get(i).getModelListSize(); k++) {
+                    try {
+                        if (((int) (Integer.parseInt("" + _Variables.COMPANIES.get().get(i).getFullModelList().get(k).getName()))) == value) {
+                            _Variables.EQUIPMENT_COMPANY_INDEX.set(i);
+                            _Variables.EQUIPMENT_UNIT_INDEX.set(k);
+                            return true;
+                        }
+                    } catch(Exception e) {}
                 }
             }
         }
@@ -49,10 +54,8 @@ public class _b4_GetEquipId extends AppCompatActivity {
             Log.e("ERROR", "Wrong Address:  " + address);
 
         info.setText("Equipment ID Read Does Not Match Any On Record\nPlease Try Again...\n\nTap ProactiveOne To Get The Equipment ID");
+        _Variables.EQUIPMENT_UNIT_INDEX.set(0);
         return false;
-        */
-        _Variables.EQUIPMENT_ID_INDEX.set(0);
-        return true;
     }
 
     public void createDialog(int dNum, String title, String msg, String pos, String meh, String neg) {
